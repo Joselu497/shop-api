@@ -5,7 +5,7 @@ export class QueryMiddleware implements NestMiddleware {
   use(req: any, res: any, next: (error?: any) => void) {
     const page = +req.query.page || 1;
     const limit = +req.query.limit || 10;
-    const order = req.query.order || [['name', 'ASC']];
+    const order = req.query.order || [['id', 'ASC']];
     const search = req.query.search || '';
 
     const options = {

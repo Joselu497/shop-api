@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { config as sequelizeConfig } from './_database/ts-config/config';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ProductsModule } from './products/products.module';
     ),
     UsersModule,
     ProductsModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
