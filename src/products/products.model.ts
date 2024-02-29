@@ -1,4 +1,6 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { BelongsToMany, Column, Model, Table } from 'sequelize-typescript';
+import { Tag } from '../tags/tags.model';
+import { ProductTag } from '../relations/product-tag.model';
 
 @Table
 export class Product extends Model {
@@ -12,4 +14,7 @@ export class Product extends Model {
 
   @Column
   price: number;
+
+  @BelongsToMany(() => Tag, () => ProductTag)
+  tags: Tag[];
 }

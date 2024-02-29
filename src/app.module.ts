@@ -6,6 +6,8 @@ import { config as sequelizeConfig } from './_database/ts-config/config';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { SalesModule } from './sales/sales.module';
+import { TagsModule } from './tags/tags.module';
+import { ProductTagModule } from './relations/product-tag.model';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { SalesModule } from './sales/sales.module';
     UsersModule,
     ProductsModule,
     SalesModule,
+    TagsModule,
+    ProductTagModule,
   ],
   controllers: [AppController],
   providers: [AppService],
