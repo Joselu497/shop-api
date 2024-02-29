@@ -13,6 +13,7 @@ export class ProductsService {
 
   async create(createProductDto: ProductsDto): Promise<Product> {
     return this.model.create({
+      pic: createProductDto.pic,
       name: createProductDto.name,
       description: createProductDto.description,
       price: createProductDto.price,
@@ -44,6 +45,7 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
 
+    model.pic = updateProductDto.pic;
     model.name = updateProductDto.name;
     model.description = updateProductDto.description;
     model.price = updateProductDto.price;

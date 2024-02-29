@@ -7,7 +7,8 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { SalesModule } from './sales/sales.module';
 import { TagsModule } from './tags/tags.module';
-import { ProductTagModule } from './relations/product-tag.model';
+import { ProductTagModule } from './_relations/product-tag.model';
+import { IsUniqueConstraint } from './_core/decorators/is-unique.decorator';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { ProductTagModule } from './relations/product-tag.model';
     ProductTagModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, IsUniqueConstraint],
 })
 export class AppModule {}

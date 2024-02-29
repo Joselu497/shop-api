@@ -2,22 +2,17 @@ import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model {
-  @Column({
-    unique: true,
-  })
+  @Column
   name: string;
 
-  @Column({
-    unique: true,
-    validate: {
-      isEmail: true,
-    },
-  })
+  @Column
   email: string;
 
   @Column
   password: string;
 
-  @Column
+  @Column({
+    defaultValue: false,
+  })
   isAdmin: boolean;
 }

@@ -1,12 +1,13 @@
 import { BelongsToMany, Column, Model, Table } from 'sequelize-typescript';
 import { Tag } from '../tags/tags.model';
-import { ProductTag } from '../relations/product-tag.model';
+import { ProductTag } from '../_relations/product-tag.model';
 
 @Table
 export class Product extends Model {
-  @Column({
-    unique: true,
-  })
+  @Column
+  pic: string;
+
+  @Column
   name: string;
 
   @Column
