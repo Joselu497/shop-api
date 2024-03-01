@@ -73,7 +73,7 @@ export class ProductsService {
     if (!!product && !!tag) {
       await product.$add('tags', tag);
     } else {
-      throw new Error('Product or tag not found');
+      throw new NotFoundException('Product or tag not found');
     }
   }
 
@@ -84,7 +84,7 @@ export class ProductsService {
     if (!!product && !!tag) {
       await product.$remove('tags', tag);
     } else {
-      throw new Error('Product or tag not found');
+      throw new NotFoundException('Product or tag not found');
     }
   }
 
@@ -94,7 +94,7 @@ export class ProductsService {
     if (!!product) {
       return await product.$get('tags');
     } else {
-      throw new Error('Product not found');
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
   }
 }
