@@ -3,12 +3,15 @@ import { ProductsDto } from './products.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Product } from './products.model';
 import { FindAndCountOptions, FindOptions } from 'sequelize';
+import { Tag } from 'src/tags/tags.model';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product)
     private readonly model: typeof Product,
+    @InjectModel(Tag)
+    private readonly tagModel: typeof Tag,
   ) {}
 
   async create(createProductDto: ProductsDto): Promise<Product> {
@@ -61,5 +64,37 @@ export class ProductsService {
     }
 
     return model.destroy();
+  }
+
+  async addTag(id: number, tagId: number): Promise<void> {
+    const product = await this.model.findByPk(id);
+    const tag = await this.tagModel.findByPk(tagId);
+
+    if (!!product && !!tag) {
+      await product.$add('tags', tag);
+    } else {
+      throw new Error('Product or tag not found');
+    }
+  }
+
+  async removeTag(id: number, tagId: number): Promise<void> {
+    const product = await this.model.findByPk(id);
+    const tag = await this.tagModel.findByPk(tagId);
+
+    if (!!product && !!tag) {
+      await product.$remove('tags', tag);
+    } else {
+      throw new Error('Product or tag not found');
+    }
+  }
+
+  async getTags(id: number): Promise<Tag[]> {
+    const product = await this.model.findByPk(id);
+
+    if (!!product) {
+      return await product.$get('tags');
+    } else {
+      throw new Error('Product not found');
+    }
   }
 }

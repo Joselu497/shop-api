@@ -4,9 +4,13 @@ import { ProductsController } from './products.controller';
 import { QueryMiddleware } from 'src/_core/middleware/query.middleware';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Product } from './products.model';
+import { Tag } from 'src/tags/tags.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Product])],
+  imports: [
+    SequelizeModule.forFeature([Product]),
+    SequelizeModule.forFeature([Tag]),
+  ],
   controllers: [ProductsController],
   providers: [ProductsService],
 })

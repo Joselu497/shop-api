@@ -11,6 +11,7 @@ import {
 import { ProductsService } from './products.service';
 import { ProductsDto } from './products.dto';
 import { Product } from './products.model';
+import { Tag } from 'src/tags/tags.model';
 
 @Controller('products')
 export class ProductsController {
@@ -43,5 +44,26 @@ export class ProductsController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.productsService.remove(+id);
+  }
+
+  @Get(':id/get-tags')
+  getTags(@Param('id') id: string): Promise<Tag[]> {
+    return this.productsService.getTags(+id);
+  }
+
+  @Patch(':id/add-tag/:tagId')
+  addTag(
+    @Param('id') id: string,
+    @Param('tagId') tagId: string,
+  ): Promise<void> {
+    return this.productsService.addTag(+id, +tagId);
+  }
+
+  @Patch(':id/remove-tag/:tagId')
+  removeTag(
+    @Param('id') id: string,
+    @Param('tagId') tagId: string,
+  ): Promise<void> {
+    return this.productsService.removeTag(+id, +tagId);
   }
 }
