@@ -49,7 +49,7 @@ export class QueryMiddleware implements NestMiddleware {
             },
           ],
         };
-      case 'tasks':
+      case 'tags':
         options.where = {
           name: {
             [Op.iLike]: `%${search}`,

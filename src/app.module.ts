@@ -9,6 +9,7 @@ import { SalesModule } from './sales/sales.module';
 import { TagsModule } from './tags/tags.module';
 import { ProductTagModule } from './_relations/product-tag.model';
 import { IsUniqueConstraint } from './_core/decorators/is-unique.decorator';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { IsUniqueConstraint } from './_core/decorators/is-unique.decorator';
     SalesModule,
     TagsModule,
     ProductTagModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],

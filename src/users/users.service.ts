@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { FindAndCountOptions, FindOptions } from 'sequelize';
 import { UsersDto } from './users.dto';
 import { User } from './users.model';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,10 +13,11 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: UsersDto): Promise<User> {
+    const salt = await bcrypt.genSalt(10);
     return this.model.create({
       name: createUserDto.name,
       email: createUserDto.email,
-      password: createUserDto.password,
+      password: await bcrypt.hash(createUserDto.password, salt),
       isAdmin: createUserDto.isAdmin,
     });
   }
