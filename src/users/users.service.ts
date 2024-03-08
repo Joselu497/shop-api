@@ -1,16 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { FindAndCountOptions, FindOptions } from 'sequelize';
 import { UsersDto } from './users.dto';
 import { User } from './users.model';
 import * as bcrypt from 'bcrypt';
+import { BaseService } from 'src/_core/base/base.service';
 
 @Injectable()
-export class UsersService {
+export class UsersService extends BaseService<User> {
   constructor(
     @InjectModel(User)
-    private readonly model: typeof User,
-  ) {}
+    protected readonly model: typeof User,
+  ) {
+    super(model);
+  }
 
   async create(createUserDto: UsersDto): Promise<User> {
     const salt = await bcrypt.genSalt(10);
@@ -20,24 +22,6 @@ export class UsersService {
       password: await bcrypt.hash(createUserDto.password, salt),
       isAdmin: createUserDto.isAdmin,
     });
-  }
-
-  async findAll(
-    options: FindOptions<any> | Omit<FindAndCountOptions<any>, 'group'>,
-    pagination = true,
-  ): Promise<{ rows: User[]; count: number } | User[]> {
-    return pagination
-      ? this.model.findAndCountAll(options)
-      : this.model.findAll();
-  }
-
-  async findOne(id: number): Promise<User> {
-    const data = await this.model.findByPk(id);
-
-    if (!data) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-    return data;
   }
 
   async update(id: number, updateUserDto: UsersDto): Promise<User> {
@@ -53,15 +37,5 @@ export class UsersService {
     model.isAdmin = updateUserDto.isAdmin;
 
     return model.save();
-  }
-
-  async remove(id: number): Promise<void> {
-    const model = await this.model.findByPk(id);
-
-    if (!model) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    return model.destroy();
   }
 }
