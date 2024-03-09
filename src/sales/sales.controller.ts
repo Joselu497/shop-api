@@ -35,7 +35,7 @@ export class SalesController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateSaleDto: SalesDto,
+    @Body() updateSaleDto: Partial<SalesDto>,
   ): Promise<Sale> {
     return this.salesService.update(+id, updateSaleDto);
   }

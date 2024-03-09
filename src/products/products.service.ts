@@ -25,7 +25,10 @@ export class ProductsService extends BaseService<Product> {
     });
   }
 
-  async update(id: number, updateProductDto: ProductsDto): Promise<Product> {
+  async update(
+    id: number,
+    updateProductDto: Partial<ProductsDto>,
+  ): Promise<Product> {
     const model = await this.model.findByPk(id);
 
     if (!model) {

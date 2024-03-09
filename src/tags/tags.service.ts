@@ -19,7 +19,7 @@ export class TagsService extends BaseService<Tag> {
     });
   }
 
-  async update(id: number, updateTagDto: TagsDto): Promise<Tag> {
+  async update(id: number, updateTagDto: Partial<TagsDto>): Promise<Tag> {
     const model = await this.model.findByPk(id);
 
     if (!model) {

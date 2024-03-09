@@ -24,16 +24,17 @@ export class UsersService extends BaseService<User> {
     });
   }
 
-  async update(id: number, updateUserDto: UsersDto): Promise<User> {
+  async update(id: number, updateUserDto: Partial<UsersDto>): Promise<User> {
     const model = await this.model.findByPk(id);
 
     if (!model) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
+    const salt = await bcrypt.genSalt(10);
 
     model.name = updateUserDto.name;
     model.email = updateUserDto.email;
-    model.password = updateUserDto.password;
+    model.password = await bcrypt.hash(updateUserDto.password, salt);
     model.isAdmin = updateUserDto.isAdmin;
 
     return model.save();

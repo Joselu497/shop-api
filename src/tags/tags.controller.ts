@@ -33,7 +33,10 @@ export class TagsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTagDto: TagsDto): Promise<Tag> {
+  update(
+    @Param('id') id: string,
+    @Body() updateTagDto: Partial<TagsDto>,
+  ): Promise<Tag> {
     return this.tagsService.update(+id, updateTagDto);
   }
 

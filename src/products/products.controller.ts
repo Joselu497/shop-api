@@ -36,7 +36,7 @@ export class ProductsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateProductDto: ProductsDto,
+    @Body() updateProductDto: Partial<ProductsDto>,
   ): Promise<Product> {
     return this.productsService.update(+id, updateProductDto);
   }
